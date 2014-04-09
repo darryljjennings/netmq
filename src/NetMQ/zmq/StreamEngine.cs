@@ -288,7 +288,12 @@ namespace NetMQ.zmq
             if (m_outsize == 0)
             {
                 m_outpos = null;
-                m_encoder.GetData(ref m_outpos, ref m_outsize);
+
+                // if we don't have an encoder yet, don't try and use it
+                if (null != m_encoder)
+                {
+                    m_encoder.GetData(ref m_outpos, ref m_outsize);
+                }
 
                 //  If there is no data to send, stop polling for output.
                 if (m_outsize == 0)
